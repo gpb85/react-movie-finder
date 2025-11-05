@@ -1,0 +1,14 @@
+@import "tailwindcss";
+/* Tailwind custom for hiding scrollbar */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+body {
+  background-color: black;
+  color: white;
+}
