@@ -7,5 +7,5 @@ export default defineConfig({
     react(), // απαραίτητο για React/TSX
     tailwindcss(), // Tailwind
   ],
-  base: process.env.VITE_BASE_PATH || "/react-movie-explorer", // απαραίτητο για GitHub Pages
+  base: process.env.VITE_BASE_PATH || "/react-movie-finder", // απαραίτητο για GitHub Pages
 });
