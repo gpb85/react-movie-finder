@@ -38,7 +38,6 @@ function reducer(state: State, action: Action): State {
   switch (action.type) {
     case "FETCH_START":
       return { ...state, isLoading: true, error: null };
-
     case "FETCH_SUCCESS":
       return {
         ...state,
@@ -47,10 +46,8 @@ function reducer(state: State, action: Action): State {
         isLoading: false,
         error: null,
       };
-
     case "FETCH_ERROR":
       return { ...state, error: action.payload, isLoading: false };
-
     case "CLEAR":
       return {
         items: [],
@@ -59,10 +56,8 @@ function reducer(state: State, action: Action): State {
         currentPage: 1,
         totalResults: 0,
       };
-
     case "SET_PAGE":
       return { ...state, currentPage: action.payload };
-
     default:
       return state;
   }
@@ -79,29 +74,35 @@ export default function useMovies(
     totalResults: 0,
     currentPage: 1,
   });
-
   const deferredQuery = useDeferredValue(query);
   const abortedControllerRef = useRef<AbortController | null>(null);
   const cacheRef = useRef<
     Record<string, { items: MovieProps[]; totalResults: number }>
   >({});
+  const lastFetchKeyRef = useRef<string | null>(null);
 
   const fetchMovies = useCallback(async () => {
     const searchQuery = deferredQuery.trim();
     const key = `${type}-${searchQuery}-page${state.currentPage}`;
 
-    if (!searchQuery) {
+    // Αν το query είναι μικρό, καθαρίζουμε και ακυρώνουμε προηγούμενο fetch
+    if (!searchQuery || searchQuery.length < 3) {
+      abortedControllerRef.current?.abort();
       dispatch({ type: "CLEAR" });
       return;
     }
 
+    // Επιστροφή από cache
     if (cacheRef.current[key]) {
+      abortedControllerRef.current?.abort(); // Ακυρώνουμε προηγούμενο fetch
       dispatch({ type: "FETCH_SUCCESS", payload: cacheRef.current[key] });
       return;
     }
 
+    // Ακύρωση προηγούμενου fetch
     abortedControllerRef.current?.abort();
     abortedControllerRef.current = new AbortController();
+    lastFetchKeyRef.current = key;
 
     dispatch({ type: "FETCH_START" });
 
@@ -115,10 +116,10 @@ export default function useMovies(
 
       if (!response.ok)
         throw new Error(`HTTP ERROR! Status: ${response.status}`);
-
       const data: OmdbIDApiResponse = await response.json();
 
-      console.log(data.totalResults);
+      // Ελέγχουμε ότι αυτό είναι το τελευταίο fetch που ξεκίνησε
+      if (lastFetchKeyRef.current !== key) return;
 
       if (data.Response === "True" && data.Search) {
         const result = {
@@ -135,7 +136,7 @@ export default function useMovies(
         });
       }
     } catch (err: any) {
-      if (err.name !== "AbortError") {
+      if (err.name !== "AbortError" && lastFetchKeyRef.current === key) {
         dispatch({
           type: "FETCH_ERROR",
           payload: err.message || "Something went wrong",
@@ -153,18 +154,15 @@ export default function useMovies(
     [state.items]
   );
 
-  // Pagination
   const nextPage = useCallback(() => {
     const maxPages = Math.ceil(state.totalResults / 10);
-    if (state.currentPage < maxPages) {
+    if (state.currentPage < maxPages)
       dispatch({ type: "SET_PAGE", payload: state.currentPage + 1 });
-    }
   }, [state.currentPage, state.totalResults]);
 
   const previousPage = useCallback(() => {
-    if (state.currentPage > 1) {
+    if (state.currentPage > 1)
       dispatch({ type: "SET_PAGE", payload: state.currentPage - 1 });
-    }
   }, [state.currentPage]);
 
   useDebugValue(

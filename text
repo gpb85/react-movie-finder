@@ -1,3 +1,6 @@
+project link :react-movie-finder-seven.vercel.app
+
+
 Hook	Ρόλος στο project
 useState	Για state: query, αποτελέσματα, favorites, sorting
 useEffect	Για fetch δεδομένων όταν αλλάζει το query
