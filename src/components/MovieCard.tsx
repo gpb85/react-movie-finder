@@ -24,18 +24,20 @@ export default React.memo(function MovieCard({
       <img
         src={movie.Poster !== "N/A" ? movie.Poster : "/placeholder.jpg"}
         alt={movie.Title}
-        className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+        className="w-full aspect-[2/3] object-cover transition-transform duration-300 group-hover:scale-105"
         loading="lazy"
       />
 
       {/* Overlay info */}
       <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center text-center p-4">
-        <h3 className="text-white font-semibold text-lg truncate">
+        <h3 className="text-white font-semibold text-sm sm:text-base md:text-lg text-center line-clamp-2">
           {movie.Title}
         </h3>
-        <p className="text-gray-300 text-sm">Year: {movie.Year}</p>
-        <p className="text-gray-300 text-sm">Rating: {movie.imdbRating}</p>
-        <p className="text-gray-300 text-sm">Genre: {movie.Genre}</p>
+        <p className="text-gray-300 text-xs sm:text-sm">Year: {movie.Year}</p>
+        <p className="text-gray-300 text-xs sm:text-sm">
+          Rating: {movie.imdbRating}
+        </p>
+        <p className="text-gray-300 text-xs sm:text-sm">Genre: {movie.Genre}</p>
       </div>
 
       {/* Favorite button */}

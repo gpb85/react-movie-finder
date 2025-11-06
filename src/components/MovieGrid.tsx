@@ -4,14 +4,58 @@ import MovieCard from "./MovieCard";
 interface MovieGridProps {
   movies: MovieProps[];
   onShowDetails: (imdbID: string) => void;
+  currentPage: number;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  nextPage: () => void;
+  previousPage: () => void;
 }
 
-export default function MovieGrid({ movies, onShowDetails }: MovieGridProps) {
+export default function MovieGrid({
+  movies,
+  onShowDetails,
+  currentPage,
+  hasNextPage,
+  hasPreviousPage,
+  nextPage,
+  previousPage,
+}: MovieGridProps) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
-      {movies.map((m) => (
-        <MovieCard key={m.imdbID} movie={m} onShowDetails={onShowDetails} />
-      ))}
+    <div>
+      {" "}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10 mt-10">
+        {movies.map((m) => (
+          <MovieCard key={m.imdbID} movie={m} onShowDetails={onShowDetails} />
+        ))}
+      </div>
+      {/**pagination */}
+      <div className="flex justify-center gap-4 mt-6">
+        <button
+          onClick={previousPage}
+          disabled={!hasPreviousPage}
+          className={`px-4 py-2 rounded ${
+            hasPreviousPage
+              ? "bg-blue-500 hover:big-blue-600 text-white"
+              : "bg-gray-300 text-gray-500 cursor-not-allowed"
+          }`}
+        >
+          previous
+        </button>
+        <span className="flex items-center text-gray-700 font-medium">
+          Page {currentPage}
+        </span>
+        <button
+          onClick={nextPage}
+          disabled={!hasNextPage}
+          className={`px-4 py-2 rounded ${
+            hasNextPage
+              ? "bg-blue-500 hover:bg-blue-600 text-white"
+              : "bg-gray-300 text-gray-500 cursor-not-allowed"
+          }`}
+        >
+          next
+        </button>
+      </div>
     </div>
   );
 }

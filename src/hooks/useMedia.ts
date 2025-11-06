@@ -65,7 +65,7 @@ function reducer(state: State, action: Action): State {
 
 export default function useMovies(
   query: string,
-  type: "movie" | "series"
+  type: "movie" | "series" | "episode" | "all" = "movie"
 ): UseMoviesResult {
   const [state, dispatch] = useReducer(reducer, {
     items: [],
@@ -107,10 +107,13 @@ export default function useMovies(
     dispatch({ type: "FETCH_START" });
 
     try {
+      const typeParam = type !== "all" ? `&type=${type}` : "";
+      console.log("type: ", type);
+
       const response = await fetch(
         `${baseUrl}/?apikey=${apikey}&s=${encodeURIComponent(
           searchQuery
-        )}&type=${type}&page=${state.currentPage}`,
+        )}${typeParam}&page=${state.currentPage}`,
         { signal: abortedControllerRef.current.signal }
       );
 

@@ -9,11 +9,27 @@ interface MovieSearchProps {
 
 export default function MovieSearch({ onShowDetails }: MovieSearchProps) {
   const [query, setQuery] = useState("");
-  const { movies, isLoading, error, refetch } = UseMovies(query, "movie");
+  const [type, setType] = useState<"movie" | "series" | "all">("movie");
+  const {
+    movies,
+    isLoading,
+    error,
+    refetch,
+    currentPage,
+    hasNextPage,
+    hasPreviousPage,
+    nextPage,
+    previousPage,
+  } = UseMovies(query, type);
 
   return (
-    <div className="max-w-6xl mx-auto p-4">
-      <SearchBar query={query} onQueryChange={setQuery} />
+    <div className="searchbox">
+      <SearchBar
+        query={query}
+        onQueryChange={setQuery}
+        type={type}
+        onTypeChange={setType}
+      />
 
       {isLoading && <div className="text-white mt-4">Loading movies...</div>}
 
@@ -34,7 +50,15 @@ export default function MovieSearch({ onShowDetails }: MovieSearchProps) {
       )}
 
       {!isLoading && movies.length > 0 && (
-        <MovieGrid movies={movies} onShowDetails={onShowDetails} />
+        <MovieGrid
+          movies={movies}
+          onShowDetails={onShowDetails}
+          currentPage={currentPage}
+          nextPage={nextPage}
+          hasNextPage={hasNextPage}
+          previousPage={previousPage}
+          hasPreviousPage={hasPreviousPage}
+        />
       )}
     </div>
   );

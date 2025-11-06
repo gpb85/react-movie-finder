@@ -3,6 +3,7 @@ import { FavoritesContextProvider } from "../context/FavoritesContext";
 import MovieSearch from "../components/MovieSearch";
 import MovieDetailsCard from "../components/MovieDetailsCard";
 import Favorites from "../components/Favorites";
+import Navbar from "../components/Navigation";
 
 export default function Home() {
   const [selectedMovieId, setSelectedMovieId] = useState<string | null>(null);
@@ -17,6 +18,7 @@ export default function Home() {
 
   return (
     <FavoritesContextProvider>
+      <Navbar />
       <main className="min-h-screen bg-gray-800 text-white p-4">
         <h1 className="text-3xl font-bold mb-6 text-center">Movie Finder</h1>
 
