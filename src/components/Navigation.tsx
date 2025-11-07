@@ -21,11 +21,12 @@ export default function Navbar() {
         <Link to="/" className="hover:text-blue-400">
           Home
         </Link>
+        <br />
         <Link to="/favorites" className="hover:text-red-400">
           Favorites
         </Link>
 
-        {/* Dropdown */}
+        {/* Dropdown! */}
       </div>
 
       {/* Mobile menu button */}
