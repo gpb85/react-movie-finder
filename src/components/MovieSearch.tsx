@@ -20,6 +20,7 @@ export default function MovieSearch({ onShowDetails }: MovieSearchProps) {
     hasPreviousPage,
     nextPage,
     previousPage,
+    totalResults,
   } = UseMovies(query, type);
 
   return (
@@ -58,6 +59,7 @@ export default function MovieSearch({ onShowDetails }: MovieSearchProps) {
           hasNextPage={hasNextPage}
           previousPage={previousPage}
           hasPreviousPage={hasPreviousPage}
+          totalResults={totalResults}
         />
       )}
     </div>

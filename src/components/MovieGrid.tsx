@@ -9,6 +9,7 @@ interface MovieGridProps {
   hasPreviousPage: boolean;
   nextPage: () => void;
   previousPage: () => void;
+  totalResults: number;
 }
 
 export default function MovieGrid({
@@ -19,10 +20,14 @@ export default function MovieGrid({
   hasPreviousPage,
   nextPage,
   previousPage,
+
+  totalResults,
 }: MovieGridProps) {
+  const totalPages = Math.ceil(totalResults / 10);
+  console.log("totalpages", totalPages);
+
   return (
     <div>
-      {" "}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10 mt-10">
         {movies.map((m) => (
           <MovieCard key={m.imdbID} movie={m} onShowDetails={onShowDetails} />
@@ -42,7 +47,7 @@ export default function MovieGrid({
           previous
         </button>
         <span className="flex items-center text-gray-700 font-medium">
-          Page {currentPage}
+          Page {currentPage} of {totalPages}
         </span>
         <button
           onClick={nextPage}

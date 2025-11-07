@@ -108,7 +108,7 @@ export default function useMovies(
 
     try {
       const typeParam = type !== "all" ? `&type=${type}` : "";
-      console.log("type: ", type);
+      //console.log("type: ", type);
 
       const response = await fetch(
         `${baseUrl}/?apikey=${apikey}&s=${encodeURIComponent(

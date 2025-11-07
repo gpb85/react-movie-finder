@@ -1,5 +1,6 @@
 import { useFavoritesContext } from "../context/FavoritesContext";
-import Carousel from "./Carousel";
+
+import MovieGrid from "./MovieGrid";
 
 interface FavoritesProps {
   onShowDetails: (imdbID: string) => void;
@@ -8,10 +9,11 @@ interface FavoritesProps {
 export default function Favorites({ onShowDetails }: FavoritesProps) {
   const { favorites } = useFavoritesContext();
 
-  if (!favorites || favorites.length === 0)
-    return (
-      <p className="text-center text-gray-400">Δεν υπάρχουν αγαπημένα ακόμα.</p>
-    );
+  if (!favorites || favorites.length === 0) return <p>No favorites yet.</p>;
 
-  return <Carousel movies={favorites} onShowDetails={onShowDetails} />;
+  return (
+    <div className="favorites-container">
+      <MovieGrid movies={favorites} onShowDetails={onShowDetails} />
+    </div>
+  );
 }

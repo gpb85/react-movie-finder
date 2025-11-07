@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FavoritesContextProvider } from "../context/FavoritesContext";
 import MovieSearch from "../components/MovieSearch";
 import MovieDetailsCard from "../components/MovieDetailsCard";
-import Favorites from "../components/Favorites";
+
 import Navbar from "../components/Navigation";
 
 export default function Home() {
@@ -32,9 +32,6 @@ export default function Home() {
             onClose={handleCloseDetails}
           />
         )}
-
-        {/* Favorites List */}
-        <Favorites onShowDetails={handleShowDetails} />
       </main>
     </FavoritesContextProvider>
   );
