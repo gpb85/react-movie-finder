@@ -1,37 +1,19 @@
-import { useState } from "react";
+// pages/Home.tsx
 import { FavoritesContextProvider } from "../context/FavoritesContext";
-import MovieSearch from "../components/MovieSearch";
-import MovieDetailsCard from "../components/MovieDetailsCard";
-
 import Navbar from "../components/Navigation";
+import MovieSearch from "../components/MovieSearch";
 
-export default function Home() {
-  const [selectedMovieId, setSelectedMovieId] = useState<string | null>(null);
+interface HomeProps {
+  onShowDetails: (imdbID: string) => void;
+}
 
-  const handleShowDetails = (imdbID: string) => {
-    setSelectedMovieId(imdbID);
-  };
-
-  const handleCloseDetails = () => {
-    setSelectedMovieId(null);
-  };
-
+export default function Home({ onShowDetails }: HomeProps) {
   return (
     <FavoritesContextProvider>
       <Navbar />
       <main className="min-h-screen bg-gray-800 text-white p-4">
         <h1 className="text-3xl font-bold mb-6 text-center">Movie Finder</h1>
-
-        {/* Movie Search */}
-        <MovieSearch onShowDetails={handleShowDetails} />
-
-        {/* Movie Details Modal */}
-        {selectedMovieId && (
-          <MovieDetailsCard
-            imdbID={selectedMovieId}
-            onClose={handleCloseDetails}
-          />
-        )}
+        <MovieSearch onShowDetails={onShowDetails} />
       </main>
     </FavoritesContextProvider>
   );

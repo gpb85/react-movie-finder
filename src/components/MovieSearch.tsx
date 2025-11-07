@@ -1,7 +1,8 @@
+// components/MovieSearch.tsx
 import { useState } from "react";
 import SearchBar from "./SearchBar";
 import MovieGrid from "./MovieGrid";
-import UseMovies from "../hooks/useMedia";
+import useMovies from "../hooks/useMedia";
 
 interface MovieSearchProps {
   onShowDetails: (imdbID: string) => void;
@@ -10,6 +11,7 @@ interface MovieSearchProps {
 export default function MovieSearch({ onShowDetails }: MovieSearchProps) {
   const [query, setQuery] = useState("");
   const [type, setType] = useState<"movie" | "series" | "all">("movie");
+
   const {
     movies,
     isLoading,
@@ -21,7 +23,7 @@ export default function MovieSearch({ onShowDetails }: MovieSearchProps) {
     nextPage,
     previousPage,
     totalResults,
-  } = UseMovies(query, type);
+  } = useMovies(query, type);
 
   return (
     <div className="searchbox">
