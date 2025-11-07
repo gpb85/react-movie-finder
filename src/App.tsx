@@ -6,6 +6,7 @@ import FavoritesPage from "./pages/FavoritesPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import { useState } from "react";
 import MovieDetailsCard from "./components/MovieDetailsCard";
+import { FavoritesContextProvider } from "./context/FavoritesContext";
 
 export default function App() {
   const [selectedMovieId, setSelectedMovieId] = useState<string | null>(null);
@@ -32,13 +33,15 @@ export default function App() {
 
   return (
     <div>
-      <RouterProvider router={router} />
-      {selectedMovieId && (
-        <MovieDetailsCard
-          imdbID={selectedMovieId}
-          onClose={handleCloseDetails}
-        />
-      )}
+      <FavoritesContextProvider>
+        <RouterProvider router={router} />
+        {selectedMovieId && (
+          <MovieDetailsCard
+            imdbID={selectedMovieId}
+            onClose={handleCloseDetails}
+          />
+        )}
+      </FavoritesContextProvider>
     </div>
   );
 }
