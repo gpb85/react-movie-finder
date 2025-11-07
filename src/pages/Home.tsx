@@ -1,5 +1,5 @@
 // pages/Home.tsx
-import { FavoritesContextProvider } from "../context/FavoritesContext";
+
 import Navbar from "../components/Navigation";
 import MovieSearch from "../components/MovieSearch";
 
