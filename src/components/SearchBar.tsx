@@ -52,7 +52,7 @@ export default function SearchBar({
                 className=" hidden"
                 value={t}
                 checked={type === t}
-                onChange={() => onTypeChange(t as any)}
+                onChange={() => onTypeChange?.(t as "movie" | "series" | "all")}
               />
               {t.charAt(0).toUpperCase() + t.slice(1)}
             </label>

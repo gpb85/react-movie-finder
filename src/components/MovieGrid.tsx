@@ -4,11 +4,11 @@ import MovieCard from "./MovieCard";
 interface MovieGridProps {
   movies: MovieProps[];
   onShowDetails: (imdbID: string) => void;
-  currentPage: number;
-  hasNextPage: boolean;
-  hasPreviousPage: boolean;
-  nextPage: () => void;
-  previousPage: () => void;
+  currentPage?: number;
+  hasNextPage?: boolean;
+  hasPreviousPage?: boolean;
+  nextPage?: () => void;
+  previousPage?: () => void;
   totalResults: number;
 }
 
