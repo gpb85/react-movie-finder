@@ -13,7 +13,11 @@ export default function Favorites({ onShowDetails }: FavoritesProps) {
 
   return (
     <div className="favorites-container">
-      <MovieGrid movies={favorites} onShowDetails={onShowDetails} />
+      <MovieGrid
+        movies={favorites}
+        onShowDetails={onShowDetails}
+        totalResults={favorites.length}
+      />
     </div>
   );
 }
