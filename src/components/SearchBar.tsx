@@ -3,9 +3,9 @@ import { useLocation } from "react-router-dom";
 
 interface SearchBarProps {
   query: string;
-  type: "movie" | "series" | "all";
+  type?: "movie" | "series" | "all";
   onQueryChange: (value: string) => void;
-  onTypeChange: (value: "movie" | "series" | "all") => void;
+  onTypeChange?: (value: "movie" | "series" | "all") => void;
 }
 
 export default function SearchBar({
