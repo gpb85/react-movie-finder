@@ -19,17 +19,20 @@ export default function App() {
     setSelectedMovieId(null);
   };
 
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Home onShowDetails={handleShowDetails} />,
-      errorElement: <NotFoundPage />,
-    },
-    {
-      path: "/favorites",
-      element: <FavoritesPage onShowDetails={handleShowDetails} />,
-    },
-  ]);
+  const router = createBrowserRouter(
+    [
+      {
+        path: "/",
+        element: <Home onShowDetails={handleShowDetails} />,
+        errorElement: <NotFoundPage />,
+      },
+      {
+        path: "/favorites",
+        element: <FavoritesPage onShowDetails={handleShowDetails} />,
+      },
+    ],
+    { basename: "/react-movie-finder" }
+  );
 
   return (
     <div>

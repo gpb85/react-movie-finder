@@ -120,6 +120,7 @@ export default function useMovies(
       if (!response.ok)
         throw new Error(`HTTP ERROR! Status: ${response.status}`);
       const data: OmdbIDApiResponse = await response.json();
+      console.log(data);
 
       // Ελέγχουμε ότι αυτό είναι το τελευταίο fetch που ξεκίνησε
       if (lastFetchKeyRef.current !== key) return;
